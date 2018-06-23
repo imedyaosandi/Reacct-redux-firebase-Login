@@ -1,0 +1,28 @@
+input[type="email"]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+input[type="password"]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+button{
+    background-color: black;
+    border: none;
+    color:white;
+    padding: 10px 22px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.sig{
+    text-align: center;
+} 
+
+GoogleButton{
+    text-align: center;
+}
