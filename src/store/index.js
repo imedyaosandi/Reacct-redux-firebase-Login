@@ -1,8 +1,25 @@
-import { createStore } from 'redux';
 import rootReducer from '../reducers';
-import firebase from '../firebase'
+import * as firebase from 'firebase'
+//import firebase from '../firebase'
+import { compose, createStore } from 'redux'
+import { reactReduxFirebase } from 'react-redux-firebase'
 
-const store = createStore(rootReducer);
+//createStore(rootReducer);
 
+export default function configureStore (initialState, history) {
 
-export default store;
+  //firebase.initializeApp(fbConfig)
+
+  const createStoreWithMiddleware = compose(
+    reactReduxFirebase(firebase,
+      {
+        userProfile: 'users',
+        enableLogging: false
+      }
+    ),
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f)(createStore)
+  const store = createStoreWithMiddleware(rootReducer)
+
+  return store
+}
+//export default store;

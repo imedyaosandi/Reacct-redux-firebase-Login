@@ -10,7 +10,9 @@ import './index.css';
 const AccountPage = ({ authUser }) =>
   <div className="acc">
     <h1>Account: {authUser.email} </h1> 
+    <h2> PASSWORD FORGOT </h2>
     <PasswordForgetForm />
+    <h2> PASSWORD CHANGE </h2>
     <PasswordChangeForm />
   </div>
 

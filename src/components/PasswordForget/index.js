@@ -50,6 +50,7 @@ class PasswordForgetForm extends Component {
     const isInvalid = email === '';
 
     return (
+      
       <form onSubmit={this.onSubmit}>
         <input
           value={this.state.email}
@@ -59,7 +60,7 @@ class PasswordForgetForm extends Component {
         />
         <br/>
         <button disabled={isInvalid} type="submit">
-          Reset My Password
+          Forgot Password
         </button>
         <br/>
         { error && <p>{error.message}</p> }
