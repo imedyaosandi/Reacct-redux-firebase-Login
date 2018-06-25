@@ -13,7 +13,7 @@ export default function configureStore (initialState, history) {
   const createStoreWithMiddleware = compose(
     reactReduxFirebase(firebase,
       {
-        userProfile: 'users',
+        userProfile: 'agents/users',
         enableLogging: false
       }
     ),

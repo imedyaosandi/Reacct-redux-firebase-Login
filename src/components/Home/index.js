@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 import withAuthorization from '../Session/withAuthorization';
+import AgentInfo from "../AgentInfo"
+import DriverList from "../DriverList"
 import { db } from '../../firebase';
 import './index.css';
+import { firebaseConnect } from 'react-redux-firebase'
 
 class HomePage extends Component {
   componentDidMount() {
@@ -22,7 +25,11 @@ class HomePage extends Component {
       <div className="hmm">
         <h1>Home</h1>
         <p>The Home Page is accessible by every signed in user.</p>
+        <p> {JSON.stringify(this.props.profile)}</p>
+        {this.props.profile ? <AgentInfo agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
 
+        
+        {this.props.profile ? <DriverList agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
         { !!users && <UserList users={users} /> }
       </div>
     );
@@ -35,12 +42,13 @@ const UserList = ({ users }) =>
     <p>(Saved on Sign Up in Firebase Database)</p>
 
     {Object.keys(users).map(key =>
-      <div key={key}>{users[key].username}</div>
+      <div key={key}>{users[key].name}</div>
     )}
   </div>
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state,  props) => ({
   users: state.userState.users,
+  profile: state.firebase.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -50,6 +58,10 @@ const mapDispatchToProps = (dispatch) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
-  withAuthorization(authCondition),
-  connect(mapStateToProps, mapDispatchToProps)
+  withAuthorization(authCondition), 
+  firebaseConnect([
+    // 'todos' // { path: '/todos' } // object notation
+  ]),
+  connect(mapStateToProps, mapDispatchToProps),
+
 )(HomePage);
