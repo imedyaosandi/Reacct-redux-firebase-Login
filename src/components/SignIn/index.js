@@ -51,7 +51,6 @@ class SignInForm extends Component {
     auth.doAuthWithGoogle(provider);
 
     firebase.auth().signInWithPopup(provider).then(function (result) {
-      console.log("error after pop up");
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
