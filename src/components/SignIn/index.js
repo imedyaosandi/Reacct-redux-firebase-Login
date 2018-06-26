@@ -78,48 +78,6 @@ class SignInForm extends Component {
       var credential = error.credential;
       
     });
-
-    const {
-      history,
-    } = this.props; 
-
-    const {
-      username,
-      email,
-      password,
-    } = this.state;
-
-    
-    auth.doCreateUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-
-        // Create a user in your own accessible Firebase Database too
-        db.doCreateUser(authUser.user.uid, username, email)
-          .then(() => {
-            this.setState(() => ({ ...INITIAL_STATE }));
-            history.push(routes.HOME);
-          })
-          .catch(error => {
-            this.setState(updateByPropertyName('error', error));
-          });
-
-      })
-      .catch(error => {
-        this.setState(updateByPropertyName('error',error));
-      });
-
-   /* auth.doSignInWithEmailAndPassword(user.email, user.password)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.HOME);
-      })
-      .catch(error => {
-        this.setState(updateByPropertyName('error', error));
-      });
-      */
-
-    event.preventDefault();
-
   }
 
   onSubmit = (event) => {
