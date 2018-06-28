@@ -7,7 +7,7 @@ import { firebaseConnect, isLoaded, isEmpty, getVal } from 'react-redux-firebase
 class AgentInfo extends Component {
 
     render() {
-        return <div> Agent  Info({this.props.agentRefNo}) :  {JSON.stringify(this.props.agent)}</div>
+        return <div> Agent  Info({this.props.agentRefNo}) :  {JSON.stringify(this.props.agent)}</div>   
     }
 
 }
@@ -17,7 +17,7 @@ AgentInfo.propTypes = {
 }
 
 
-const mapStateToProps = ({ firebase }, props) => ({
+const mapStateToProps = ({ firebase },props) => ({
     agent: getVal(firebase, `data/agents/registrations/${props.agentRefNo}`),
     ...props
 });
@@ -25,7 +25,7 @@ const mapStateToProps = ({ firebase }, props) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-const authCondition = (authUser) => !!authUser;
+// const authCondition = (authUser) => !!authUser;
 
 export default compose(
     // withAuthorization(authCondition),

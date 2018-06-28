@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 import withAuthorization from '../Session/withAuthorization';
 import AgentInfo from "../AgentInfo"
-import DriverList from "../DriverList"
+import DriverList, { DriversListLink } from "../DriverList"
 import { db } from '../../firebase';
 import './index.css';
 import { firebaseConnect } from 'react-redux-firebase'
@@ -27,9 +27,7 @@ class HomePage extends Component {
         <p>The Home Page is accessible by every signed in user.</p>
         <p> {JSON.stringify(this.props.profile)}</p>
         {this.props.profile ? <AgentInfo agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
-
-        
-        {this.props.profile ? <DriverList agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
+        {this.props.profile ? <DriversListLink agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
         { !!users && <UserList users={users} /> }
       </div>
     );

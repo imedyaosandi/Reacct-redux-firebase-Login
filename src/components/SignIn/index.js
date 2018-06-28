@@ -44,42 +44,25 @@ class SignInForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  
   authWithGoogle = (event) => {
-
     let provider = new firebase.auth.GoogleAuthProvider();
     auth.doAuthWithGoogle(provider);
-
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      
-      //var user = firebase.auth().currentUser;
-      //var name, email, photoUrl, uid, emailVerified;
-
-      console.log(user.displayName);
-      console.log(user.email);
-      //console.log(user.password);
-      this.setState(updateByPropertyName('username', user.displayName ));
-      this.setState(updateByPropertyName('email', user.email));
-      //this.setState(updateByPropertyName('password', user.password));
-        
-
-    }).catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      console.log("hsbhbcqvcv");
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      
-    });
+    firebase.auth().signInWithPopup(provider)
+      .then(authUser => {
+        const user = authUser.user;
+        console.log("Got user", user)
+        return db.doCreateUser(user.uid, { name: user.displayName, email: user.email })
+      })
+      .then(this.afterLogin)
+      .catch(console.log);
   }
 
+  afterLogin = (authUser) => {
+    this.setState(() => ({ ...INITIAL_STATE }));
+    this.props.history.push(routes.HOME);
+  }
+
+  
   onSubmit = (event) => {
     const {
       email,
@@ -89,8 +72,6 @@ class SignInForm extends Component {
     const {
       history,
     } = this.props;
-
-     history.push(routes.HOME);
 
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
@@ -117,6 +98,7 @@ class SignInForm extends Component {
       email === '';
 
     return (
+      <div>
       <form onSubmit={this.onSubmit}>
         <input
           value={email}
@@ -124,21 +106,26 @@ class SignInForm extends Component {
           type="text"
           placeholder="Email Address"
         />
+
+        <br/>
         <input
           value={password}
           onChange={event => this.setState(updateByPropertyName('password', event.target.value))}
           type="password"
           placeholder="Password"
         />
+
+        <br/>
+
         <button disabled={isInvalid} type="submit">
           Sign In
         </button>
 
-        <GoogleButton onClick={this.authWithGoogle}  >
-        </GoogleButton>
-
         {error && <p>{error.message}</p>}
       </form>
+      <GoogleButton onClick={this. authWithGoogle}> </GoogleButton>
+      </div>
+     
     );
   }
 }
