@@ -28,24 +28,24 @@ class HomePage extends Component {
         <p> {JSON.stringify(this.props.profile)}</p>
         {this.props.profile ? <AgentInfo agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
         {this.props.profile ? <DriversListLink agentRefNo={ String(this.props.profile.agentRefNo)} /> : null}
-        { !!users && <UserList users={users} /> }
+        {/* { !!users && <UserList users={users} /> } */}
       </div>
     );
   }
 }
 
-const UserList = ({ users }) =>
-  <div>
-    <h2>List of Usernames of Users</h2>
-    <p>(Saved on Sign Up in Firebase Database)</p>
+// const UserList = ({ users }) =>
+//   <div>
+//     <h2>List of Usernames of Users</h2>
+//     <p>(Saved on Sign Up in Firebase Database)</p>
 
-    {Object.keys(users).map(key =>
-      <div key={key}>{users[key].name}</div>
-    )}
-  </div>
+//     {Object.keys(users).map(key =>
+//       <div key={key}>{users[key].name}</div>
+//     )}
+//   </div>
 
 const mapStateToProps = (state,  props) => ({
-  users: state.userState.users,
+  //users: state.userState.users,
   profile: state.firebase.profile,
 });
 

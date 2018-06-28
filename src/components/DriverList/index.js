@@ -9,11 +9,13 @@ import {
   } from 'react-router-dom';
 import { firebaseConnect, isLoaded, isEmpty, getVal } from 'react-redux-firebase'
 
+
+  
 class DriverList extends Component {
 
     render() {
         return (
-            <div>
+            <div >
                 <h2>Your Driver List </h2>
                 <br />
                 ({this.props.agentRefNo}) :  {JSON.stringify(this.props.drivers)}
@@ -37,7 +39,7 @@ const mapStateToProps = ({ firebase }, props) => ({
 const mapDispatchToProps = (dispatch) => ({
 });
 
-const DriversListLink = () =>
+const DriversListLink = (props) =>
   <p>
     {' '}
     <Link to={routes.DRIVERS}> Your Drivers List</Link>
@@ -49,7 +51,7 @@ export default compose(
         return [
             {
                 path: `driverRegistrations`,
-                queryParams: [`equalTo=1`, `limitToFirst=1`,'orderByChild=agentRefNo']
+                queryParams: ['orderByChild=agentRefNo','equalTo=1']
             }
         ]
     }),
